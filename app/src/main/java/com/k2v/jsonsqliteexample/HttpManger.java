@@ -12,6 +12,7 @@ import java.net.URL;
 public class HttpManger {
 
     public static String getData(String stringUrl) {
+
         BufferedReader reader = null;
         try {
             URL url = new URL(stringUrl);

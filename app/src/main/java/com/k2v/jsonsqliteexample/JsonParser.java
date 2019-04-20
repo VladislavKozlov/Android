@@ -4,7 +4,6 @@ package com.k2v.jsonsqliteexample;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class JsonParser {
 
     //private static final String TAG_BTC_BCN = "BTC_BCN";
-    public static List<String> Parse (String json) {
+    public static ArrayList<String> Parse (String json) {
 
         //String index = jsonArray.getString(0);
         System.out.println("json = ");
@@ -27,12 +26,13 @@ public class JsonParser {
             //String index = jsonArray.getString(0);
             //System.out.println("index_0 = ");
             //System.out.println(index);
-            ArrayList contactList = new ArrayList<String>();
-            contactList.add("last1 21");
-            contactList.add("last2 22");
-            contactList.add("last3 23");
-            contactList.add("last4 24");
-            contactList.add("last5 25");
+            ArrayList<String> contactList = new ArrayList();
+            contactList.add("companyname1");
+            contactList.add("latestprice1");
+            contactList.add("companyname2");
+            contactList.add("latestprice2");
+            contactList.add("companyname3");
+            contactList.add("latestprice3");
             /*
             for (int i = 0; i<jsonArray.length(); i++){
 

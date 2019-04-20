@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.os.AsyncTask;
+import android.widget.ProgressBar;
+import java.util.ArrayList;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 
 /**
@@ -14,37 +17,55 @@ import android.view.View;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    private DBHelper dbHelper_;
+    private ProgressBar pb_;
+    private ArrayList<String> contactList_;
+    private String url_;
+    private Fetcher fetcher_;
+    private Boolean fetcherFlag_;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		
 		View parseButton = findViewById(R.id.parse_button);
         parseButton.setOnClickListener(this);
-
+        View showButton = findViewById(R.id.show_button);
+        showButton.setOnClickListener(this);
 		View exitButton = findViewById(R.id.exit_button);
         exitButton.setOnClickListener(this);
 
+        pb_ = (ProgressBar) findViewById(R.id.progressBar);
+        url_ = "https://poloniex.com/public?command=returnTicker";
+        dbHelper_ = new DBHelper(this);
+        SQLiteDatabase db = dbHelper_.getWritableDatabase();
+        db.delete("jsontable", null, null);
+        dbHelper_.close();
+
+        fetcher_ = new Fetcher();
+        fetcherFlag_ = false;
     }
-
-	@Override
-	protected void onDestroy() {
-  		super.onDestroy();
- 	}
-
- 	@Override
- 	protected void onStop() {
-  		super.onStop();
-	}
 	
 	public void onClick(View v) {
 
         if(v.getId() == R.id.parse_button) {
 
-            Intent intent = new Intent(MainActivity.this, SQLiteInsertActivity.class);
-            //Intent intent = new Intent(MainActivity.this, HttpActivity.class);
+            if(!fetcherFlag_) {
+                fetcher_.execute(url_);
+                fetcherFlag_ = true;
+            }
+        }
+
+        if(v.getId() == R.id.show_button) {
+
+           // if(fetcherFlag_) {
+                //fetcher_.cancel(true);
+                //fetcherFlag_ = false;
+           // }
+            Intent intent = new Intent(MainActivity.this,SQLiteQueryActivity.class);
             startActivity(intent);
         }
 
@@ -54,25 +75,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    public void DBAdapter(String json){
+        
+        contactList_ = JsonParser.Parse(json);
+        //insert data from contactList
+        dbHelper_ = new DBHelper(this);
+        ContentValues contVal = new ContentValues();
+        //DB connect
+        SQLiteDatabase db = dbHelper_.getWritableDatabase();
+        String companyname;
+        String latestprice;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        for (int i = 0; i < contactList_.size() - 1; i += 2) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            companyname = contactList_.get(i);
+            latestprice = contactList_.get(i + 1);
+            contVal.put("companyname", companyname);
+            contVal.put("latestprice", latestprice);
+            db.insert("jsontable", null, contVal);
         }
 
-        return super.onOptionsItemSelected(item);
+        dbHelper_.close();
+    }
+
+    //AsyncTask
+    private class Fetcher extends AsyncTask<String, String, String>{
+
+        @Override
+        protected void onPreExecute() {
+            pb_.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String data = HttpManger.getData(params[0]);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(String str) {
+            DBAdapter(str);
+            pb_.setVisibility(View.INVISIBLE);
+        }
     }
 }
