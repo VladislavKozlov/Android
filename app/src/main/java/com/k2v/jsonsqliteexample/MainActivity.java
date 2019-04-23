@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v.getId() == R.id.parse_button) {
 
             if(!fetcherFlag_) {
+			
                 fetcher_.execute(url_);
                 fetcherFlag_ = true;
             }
@@ -61,10 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(v.getId() == R.id.show_button) {
 
-           // if(fetcherFlag_) {
-                //fetcher_.cancel(true);
-                //fetcherFlag_ = false;
-           // }
             Intent intent = new Intent(MainActivity.this,SQLiteQueryActivity.class);
             startActivity(intent);
         }
@@ -76,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void DBAdapter(String json){
-        
+
         contactList_ = JsonParser.Parse(json);
         //insert data from contactList
         dbHelper_ = new DBHelper(this);
@@ -103,18 +100,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPreExecute() {
+		
             pb_.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected String doInBackground(String... params) {
+		
             String data = HttpManger.getData(params[0]);
             return data;
         }
 
         @Override
         protected void onPostExecute(String str) {
-            DBAdapter(str);
+		
+            //DBAdapter(str);
+			DBAdapter("{'json_array':['companyname1','price1','companyname2','price2','companyname3','price3']}");
             pb_.setVisibility(View.INVISIBLE);
         }
     }
