@@ -17,27 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity
-            android:name=".HttpActivity"
-            android:theme="@style/MyTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.k2v.jsonsqliteexample.HttpActivity" />
-        </activity>
-        <activity
-            android:name=".TextViewActivity"
-            android:theme="@style/MyTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.k2v.jsonsqliteexample.TextViewActivity" />
-        </activity>
-        <activity
-            android:name=".SQLiteInsertActivity"
-            android:theme="@style/MyTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.k2v.jsonsqliteexample.SQLiteInsertActivity" />
-        </activity>
         <activity
             android:name=".SQLiteQueryActivity">
         </activity>

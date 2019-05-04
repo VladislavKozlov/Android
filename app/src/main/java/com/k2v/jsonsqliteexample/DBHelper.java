@@ -9,22 +9,31 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
+    public static String DB_NAME;
+    public static String TABLE_NAME;
+    public static String CRYPTOTICKER;
+    public static String lASTTRAIDE;
+    private static final int DATABASE_VERSION = 1;
+
     public DBHelper(Context context) {
 
-        super(context, "myDB", null, 1);
+        super(context, DB_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate (SQLiteDatabase db) {
 
-        db.execSQL("create table jsontable ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + "id integer primary key autoincrement,"
-                + "companyname text,"
-                + "latestprice text" + ");");
+                + CRYPTOTICKER + "text,"
+                + lASTTRAIDE + "text" + ");");
     }
 
     @Override
-    public void onUpgrade (SQLiteDatabase db,int oldVersion, int newVersion) {
+    public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 }
+

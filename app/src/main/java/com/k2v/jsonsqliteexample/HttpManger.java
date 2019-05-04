@@ -15,16 +15,14 @@ public class HttpManger {
 
         BufferedReader reader = null;
         try {
+
             URL url = new URL(stringUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
             StringBuilder sb = new StringBuilder();
-
             InputStreamReader is = new InputStreamReader(connection.getInputStream());
-
             reader = new BufferedReader(is);
-
             String line;
+
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
