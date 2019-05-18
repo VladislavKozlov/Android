@@ -16,13 +16,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public DBHelper(Context context) {
-
         super(context, DB_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate (SQLiteDatabase db) {
-
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + "id integer primary key autoincrement,"
                 + CRYPTOTICKER + "text,"
@@ -31,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
-
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }

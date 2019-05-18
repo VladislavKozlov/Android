@@ -9,7 +9,6 @@ import android.widget.ListView;
 import java.util.HashMap;
 import android.widget.SimpleAdapter;
 
-
 /**
  * Created by Vladislav Kozlov <k2v.akosa@gmail.com>
  */
@@ -26,7 +25,6 @@ public class SQLiteQueryActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
         lv_ = (ListView) findViewById(R.id.listView);
@@ -36,19 +34,14 @@ public class SQLiteQueryActivity extends Activity {
         dbHelper_ = new DBHelper(this);
         SQLiteDatabase db = dbHelper_.getWritableDatabase();
         Cursor cursor = db.query(tableName_, null, null, null, null, null, null);
-
         if (cursor.moveToFirst()) {
-
             int nameColIndex = cursor.getColumnIndex(cryptoTicker_);
             int priceColIndex = cursor.getColumnIndex(lastTraide_);
-
             do {
-
                 map = new HashMap<String, String>();
                 map.put("ticker", cursor.getString(nameColIndex));
                 map.put("last", cursor.getString(priceColIndex));
                 arrayList.add(map);
-
             } while (cursor.moveToNext());
         } else
         cursor.close();

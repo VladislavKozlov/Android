@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -63,29 +62,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
-
         if(v.getId() == R.id.parse_button) {
-
             if(!fetcherFlag_) {
                 fetcher_.execute(url_);
                 fetcherFlag_ = true;
             }
         }
-
         if(v.getId() == R.id.show_button) {
-
             Intent intent = new Intent(MainActivity.this,SQLiteQueryActivity.class);
             startActivity(intent);
         }
-
         if(v.getId() == R.id.exit_button) {
-
             finish();
         }
     }
 
     public void DBAdapter(String json){
-
         tickerList_ = JsonParser.Parse(json, itemName_);
         //insert data from tickerList_
         dbHelper_ = new DBHelper(this);
@@ -93,9 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SQLiteDatabase db = dbHelper_.getWritableDatabase();
         String ticker;
         String last;
-
         for (int i = 0; i < tickerList_.size() - 1; i += 2) {
-
             ticker = tickerList_.get(i);
             last = tickerList_.get(i + 1);
             contVal.put(cryptoTicker_, ticker);
@@ -106,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //AsyncTask
-    private class Fetcher extends AsyncTask<String, String, String>{
+    private class Fetcher extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
