@@ -7,7 +7,7 @@
     <string name="item_name">last</string>
     <string name="db_name">jsonDB</string>
     <string name="action_settings">Settings</string>
-	<string name="main_title">JsonSqlite Example</string>
+    <string name="main_title">JsonSqlite Example</string>
     <string name="parse_label">Parse</string>
     <string name="show_label">Show</string>
     <string name="exit_label">Exit</string>
