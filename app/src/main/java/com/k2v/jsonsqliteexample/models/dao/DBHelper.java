@@ -1,4 +1,4 @@
-package com.k2v.jsonsqliteexample;
+package com.k2v.jsonsqliteexample.models.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

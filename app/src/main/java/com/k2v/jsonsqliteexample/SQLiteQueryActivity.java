@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import android.widget.ListView;
 import java.util.HashMap;
 import android.widget.SimpleAdapter;
+import com.k2v.jsonsqliteexample.models.dao.DBHelper;
 
 /**
  * Created by Vladislav Kozlov <k2v.akosa@gmail.com>

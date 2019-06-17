@@ -1,4 +1,4 @@
-package com.k2v.jsonsqliteexample;
+package com.k2v.jsonsqliteexample.models.json;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

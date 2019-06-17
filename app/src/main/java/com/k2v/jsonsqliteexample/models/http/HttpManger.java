@@ -1,4 +1,4 @@
-package com.k2v.jsonsqliteexample;
+package com.k2v.jsonsqliteexample.models.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

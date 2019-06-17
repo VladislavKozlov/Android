@@ -10,6 +10,9 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import com.k2v.jsonsqliteexample.models.dao.DBHelper;
+import com.k2v.jsonsqliteexample.models.http.HttpManger;
+import com.k2v.jsonsqliteexample.models.json.JsonParser;
 
 /**
  * Created by Vladislav Kozlov <k2v.akosa@gmail.com>
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void DBAdapter(String json){
+    public void dbAdapter(String json){
         tickerList_ = JsonParser.Parse(json, itemName_);
         //insert data from tickerList_
         dbHelper_ = new DBHelper(this);
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String str) {
-            DBAdapter(str);
+            dbAdapter(str);
             pb_.setVisibility(View.INVISIBLE);
         }
     }
